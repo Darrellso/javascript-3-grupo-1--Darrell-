@@ -1,0 +1,16 @@
+.conteiner{
+    justify-content: center;
+    display: grid;
+}
+.dad{
+    height: 292px;
+}
+
+
+li{
+    display: flex;
+    justify-content: center;
+    background-color: #b3b0b0;
+    height: 144px;
+    
+}
