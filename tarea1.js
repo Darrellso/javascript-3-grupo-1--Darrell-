@@ -1,18 +1,7 @@
-const appContainer = document.querySelector("#app");
+import { render } from './modulos/render';
+import { getRandomJoke } from './modulos/apis';
+import { searchJokes } from './modulos/searchJokes';
 
-function render() {
-  const content = `
-    <h1>Chistes</h1>
-    <button class="randomButton" id="randomButton">Chiste Random</button>
-    <form id="searchForm">
-      <input type="text" id="searchTerm" placeholder="Buscar chistes" />
-      <button type="submit">Buscar</button>
-    </form>
-    <ul id="jokeList"></ul>
-  `;
-  
-  appContainer.innerHTML = content;
-}
 
 render();
 
@@ -20,17 +9,12 @@ const randomButton = document.querySelector("#randomButton");
 const searchForm = document.querySelector("#searchForm");
 
 randomButton.addEventListener("click", () => {
-  fetch("https://icanhazdadjoke.com/", {
-    headers: {
-      Accept: "application/json",
-    },
-  })
-    .then((response) => response.json())
-    .then((data) => {
+  getRandomJoke()
+    .then(joke => {
       const jokeList = document.querySelector("#jokeList");
-      jokeList.innerHTML = `<li>${data.joke}</li>`;
+      jokeList.innerHTML = `<li>${joke}</li>`;
     })
-    .catch((error) => {
+    .catch(error => {
       console.log(error);
     });
 });
@@ -43,24 +27,19 @@ searchForm.addEventListener("submit", (event) => {
     return;
   }
   
-  fetch(`https://icanhazdadjoke.com/search?term=${searchTerm}`, {
-    headers: {
-      Accept: "application/json",
-    },
-  })
-    .then((response) => response.json())
-    .then((data) => {
+  searchJokes(searchTerm)
+    .then(results => {
       const jokeList = document.querySelector("#jokeList");
       
-      if (data.results.length === 0) {
+      if (results.length === 0) {
         jokeList.innerHTML = "<li>No hubo resultados</li>";
       } else {
-        jokeList.innerHTML = data.results
-          .map((result) => `<li>${result.joke}</li>`)
+        jokeList.innerHTML = results
+          .map(joke => `<li>${joke}</li>`)
           .join("");
       }
     })
-    .catch((error) => {
+    .catch(error => {
       console.log(error);
     });
 });
