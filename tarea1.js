@@ -1,7 +1,6 @@
-import { render } from './modulos/render';
-import { getRandomJoke } from './modulos/apis';
-import { searchJokes } from './modulos/searchJokes';
-
+import render from "./modulos/render.js";
+import getRandomJoke from "./modulos/apis.js";
+import searchJokes from "./modulos/searchJokes.js";
 
 render();
 
@@ -10,36 +9,36 @@ const searchForm = document.querySelector("#searchForm");
 
 randomButton.addEventListener("click", () => {
   getRandomJoke()
-    .then(joke => {
+    .then((joke) => {
       const jokeList = document.querySelector("#jokeList");
       jokeList.innerHTML = `<li>${joke}</li>`;
     })
-    .catch(error => {
+    .catch((error) => {
       console.log(error);
     });
 });
 
 searchForm.addEventListener("submit", (event) => {
   event.preventDefault();
-  
+
   const searchTerm = document.querySelector("#searchTerm").value;
   if (!searchTerm) {
     return;
   }
-  
+
   searchJokes(searchTerm)
-    .then(results => {
+    .then((results) => {
       const jokeList = document.querySelector("#jokeList");
-      
+
       if (results.length === 0) {
         jokeList.innerHTML = "<li>No hubo resultados</li>";
       } else {
-        jokeList.innerHTML = results
-          .map(joke => `<li>${joke}</li>`)
-          .join("");
+        jokeList.innerHTML = results.map((joke) => `<li>${joke}</li>`).join("");
       }
     })
-    .catch(error => {
+    .catch((error) => {
       console.log(error);
     });
 });
+
+export default render;
