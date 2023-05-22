@@ -16,4 +16,5 @@ function searchJokes(searchTerm) {
       throw new Error("Ha ocurrido un error al buscar los chistes");
     });
 }
+
 export default searchJokes;
