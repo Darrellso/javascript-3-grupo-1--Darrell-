@@ -1,7 +1,7 @@
 function searchJokes(searchTerm) {
   return fetch(`https://icanhazdadjoke.com/search?term=${searchTerm}`, {
     headers: {
-      Accept: "application/json",
+      Accept: 'application/json',
     },
   })
     .then((response) => response.json())
@@ -13,7 +13,7 @@ function searchJokes(searchTerm) {
       }
     })
     .catch((error) => {
-      throw new Error("Ha ocurrido un error al buscar los chistes");
+      throw new Error('Ha ocurrido un error al buscar los chistes');
     });
 }
 

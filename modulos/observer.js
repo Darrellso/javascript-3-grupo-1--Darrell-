@@ -1,18 +1,35 @@
 class Observer {
   constructor() {
-    this.observers = [];
+    this.subscribers = {};
   }
 
-  subscribe(callback) {
-    this.observers.push(callback);
+  subscribe(event, callback) {
+    if (!this.subscribers[event]) {
+      this.subscribers[event] = [];
+    }
+
+    this.subscribers[event].push(callback);
   }
 
-  unsubscribe(callback) {
-    this.observers = this.observers.filter((observer) => observer !== callback);
+  unsubscribe(event, callback) {
+    if (!this.subscribers[event]) {
+      return;
+    }
+
+    const index = this.subscribers[event].indexOf(callback);
+    if (index !== -1) {
+      this.subscribers[event].splice(index, 1);
+    }
   }
 
-  notify(data) {
-    this.observers.forEach((observer) => observer(data));
+  notify(event) {
+    if (!this.subscribers[event]) {
+      return;
+    }
+
+    this.subscribers[event].forEach((callback) => {
+      callback();
+    });
   }
 }
 

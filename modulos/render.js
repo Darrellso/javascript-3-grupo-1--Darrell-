@@ -1,47 +1,44 @@
 function render(callback) {
-  const appContainer = document.querySelector("#app");
+  const appContainer = document.querySelector('#app');
 
   const content = `
     <h1>Chistes</h1>
-    <button id="randomButton">Chiste Random</button>
-    <form id="searchForm">
-      <input type="text" id="searchTerm" placeholder="Buscar chistes" />
-      <button type="submit">Buscar</button>
-    </form>
-    <ul id="jokeList"></ul>
+    <div id="productInfo">
+      <h2 id="productTitle"></h2>
+      <img id="productImage" src="" alt="">
+      <p>Precio: <span id="productPrice"></span></p>
+      <p>Chiste seleccionado: <span id="selectedJoke"></span></p>
+    </div>
+    <div id="productOptions">
+      <h2>Opciones de producto</h2>
+      <div>
+        <label for="colorSelect">Color:</label>
+        <select id="colorSelect">
+          <option value="blanco">Blanco</option>
+          <option value="negro">Negro</option>
+        </select>
+      </div>
+      <h3>Chistes</h3>
+      <button id="randomButton">Chiste Random</button>
+      <form id="searchForm">
+        <input type="text" id="searchTerm" placeholder="Buscar chistes" />
+        <button type="submit">Buscar</button>
+      </form>
+      <ul id="jokeList"></ul>
+    </div>
+    <div id="otherProducts" class="other-products">
+      <a href="#" data-product="Poster">Ver Poster</a>
+      <a href="#" data-product="Camisa">Ver Camisa</a>
+      <a href="#" data-product="Almohada">Ver Almohada</a>
+    </div>
   `;
 
   appContainer.innerHTML = content;
 
-  const searchForm = document.getElementById("searchForm");
-  const searchTermInput = document.getElementById("searchTerm");
-  const jokeList = document.getElementById("jokeList");
+  const productImage = document.getElementById('productImage');
+  productImage.src = 'product-case-white.jpg';
 
-  searchForm.addEventListener("submit", (e) => {
-    e.preventDefault();
-    const searchTerm = searchTermInput.value;
-    searchJokes(searchTerm)
-      .then((jokes) => {
-        renderJokes(jokes);
-      })
-      .catch((error) => {
-        console.error(error);
-      });
-  });
-
-  if (typeof callback === "function") {
-    callback();
-  }
-}
-
-function renderJokes(jokes) {
-  const jokeList = document.getElementById("jokeList");
-  jokeList.innerHTML = "";
-  jokes.forEach((joke) => {
-    const li = document.createElement("li");
-    li.textContent = joke;
-    jokeList.appendChild(li);
-  });
+  callback();
 }
 
 export default render;
