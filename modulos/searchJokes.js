@@ -1,4 +1,4 @@
-function searchJokes(searchTerm) {
+export function searchJokes(searchTerm) {
   return fetch(`https://icanhazdadjoke.com/search?term=${searchTerm}`, {
     headers: {
       Accept: 'application/json',
@@ -16,5 +16,6 @@ function searchJokes(searchTerm) {
       throw new Error('Ha ocurrido un error al buscar los chistes');
     });
 }
+
 
 export default searchJokes;

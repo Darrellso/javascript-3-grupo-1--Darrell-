@@ -1,4 +1,4 @@
-function getRandomJoke() {
+export function getRandomJoke() {
   return fetch('https://icanhazdadjoke.com/', {
     headers: {
       Accept: 'application/json',
