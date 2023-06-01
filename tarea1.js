@@ -20,7 +20,7 @@ function handleRandomButtonClick() {
   getRandomJoke()
     .then((joke) => {
       localStorage.setItem('selectedJoke', joke); // Almacena el chiste en el localStorage
-      window.location.href = 'ecomerse.html'; // Redirecciona a la página eComerse
+      window.location.href = 'ecomerse2.html'; // Redirecciona a la página eComerse
     })
     .catch((error) => {
       console.error(error);
