@@ -11,7 +11,8 @@ randomButton.addEventListener("click", () => {
   getRandomJoke()
     .then((joke) => {
       const jokeList = document.querySelector("#jokeList");
-      jokeList.innerHTML = `<li>${joke}</li>`;
+      jokeList.innerHTML = `<a href="ecomerse.html?joke=${encodeURIComponent(joke)}">${joke}</a>`;
+      window.location.href = `ecomerse.html?joke=${encodeURIComponent(joke)}`;
     })
     .catch((error) => {
       console.log(error);
@@ -33,7 +34,9 @@ searchForm.addEventListener("submit", (event) => {
       if (results.length === 0) {
         jokeList.innerHTML = "<li>No hubo resultados</li>";
       } else {
-        jokeList.innerHTML = results.map((joke) => `<li>${joke}</li>`).join("");
+        const jokeLinks = results.map((joke) => `<a href="ecomerse.html?joke=${encodeURIComponent(joke)}">${joke}</a>`);
+        jokeList.innerHTML = jokeLinks.join("");
+        window.location.href = `ecomerse.html?joke=${encodeURIComponent(results[0])}`;
       }
     })
     .catch((error) => {

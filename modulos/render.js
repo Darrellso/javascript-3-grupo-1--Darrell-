@@ -13,4 +13,5 @@ function render() {
 
   appContainer.innerHTML = content;
 }
+
 export default render;
