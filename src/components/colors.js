@@ -1,7 +1,13 @@
-import Publisher from '../Publisher.js';
-
-const colorInputs = document.querySelectorAll('.color');
-const colorChange = new Publisher();
+const colorInputs = Array.from(document.querySelectorAll('.color'));
+const colorChange = {
+  subscribers: [],
+  subscribe(callback) {
+    this.subscribers.push(callback);
+  },
+  publish(color) {
+    this.subscribers.forEach(callback => callback(color));
+  }
+};
 
 function handleColorChange(event) {
   const color = event.currentTarget.dataset.id;
@@ -16,5 +22,5 @@ function initColors() {
 
 export {
   initColors,
-  colorChange,
-}
+  colorChange
+};

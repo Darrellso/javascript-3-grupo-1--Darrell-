@@ -10,13 +10,6 @@ function getRandomJoke() {
         throw new Error("Ha ocurrido un error al obtener el chiste");
       });
   }
-  const urlParams = new URLSearchParams(window.location.search);
-const joke = urlParams.get("joke");
-
-if (joke) {
-  const jokeList = document.querySelector("#jokeList");
-  jokeList.innerHTML = `<p>${joke}</p>`;
-}
-
+  
   export default getRandomJoke;
   

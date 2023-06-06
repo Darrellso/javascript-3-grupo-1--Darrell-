@@ -8,18 +8,25 @@ const joke = document.querySelector('#selected-joke');
 let state = {
   color: 'white',
   product: 'shirt'
-}; 
+};
 
 function handleProductChange(product) {
-  title.innerHTML = `${state.color} ${product} with joke`;
-  price.innerHTML = `${prices[product][state.color]}`;
-  state.product = product;
+  updateDetails(product, state.color);
 }
 
 function handleColorChange(color) {
-  title.innerHTML = `${color} ${state.product} with joke`;
-  price.innerHTML = `${prices[state.product][color]}`;
-  state.color = color;
+  updateDetails(state.product, color);
+}
+
+function updateDetails(product, color) {
+  const productPrice = prices[product][color];
+
+  title.innerHTML = `${color} ${product} with joke`;
+  price.innerHTML = `${productPrice}`;
+  state = {
+    product: product,
+    color: color
+  };
 }
 
 function initDetails() {
@@ -29,4 +36,4 @@ function initDetails() {
 
 export {
   initDetails
-}
+};

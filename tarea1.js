@@ -2,42 +2,6 @@ import render from "./modulos/render.js";
 import getRandomJoke from "./modulos/apis.js";
 import searchJokes from "./modulos/searchJokes.js";
 
-import { initProducts } from './src/components/other-products.js';
-import { initVisualizer } from './src/components/visualizer.js';
-import { initDetails } from './src/components/details.js';
-import { initColors } from './src/components/colors.js';
-
-const jokeContainer = document.querySelector("#main-joke");
-const jokeList = document.querySelector("#jokeList");
-const randomJokeButton = document.querySelector("#randomJokeButton");
-
-const urlParams = new URLSearchParams(window.location.search);
-const joke = urlParams.get("joke");
-
-if (joke) {
-  jokeContainer.textContent = joke;
-  jokeList.innerHTML = `<p>${joke}</p>`;
-}
-
-getRandomJoke();
-
-initVisualizer();
-initDetails();
-initProducts();
-initColors();
-
-randomJokeButton.addEventListener("click", async () => {
-  try {
-    const joke = await getRandomJoke();
-    jokeContainer.textContent = joke;
-    jokeList.innerHTML = `<p>${joke}</p>`;
-  } catch (error) {
-    console.error(error);
-    jokeContainer.textContent = "No se pudo obtener el chiste";
-    jokeList.innerHTML = "<p>No se pudo obtener el chiste</p>";
-  }
-});
-
 render();
 
 const randomButton = document.querySelector("#randomButton");
@@ -46,8 +10,9 @@ const searchForm = document.querySelector("#searchForm");
 randomButton.addEventListener("click", () => {
   getRandomJoke()
     .then((joke) => {
-      jokeContainer.textContent = joke;
-      jokeList.innerHTML = `<p>${joke}</p>`;
+      const jokeList = document.querySelector("#jokeList");
+      jokeList.innerHTML = `<a href="ecomerse.html?joke=${encodeURIComponent(joke)}">${joke}</a>`;
+      window.location.href = `ecomerse.html?joke=${encodeURIComponent(joke)}`;
     })
     .catch((error) => {
       console.log(error);
@@ -64,12 +29,14 @@ searchForm.addEventListener("submit", (event) => {
 
   searchJokes(searchTerm)
     .then((results) => {
+      const jokeList = document.querySelector("#jokeList");
+
       if (results.length === 0) {
-        jokeList.innerHTML = "<p>No hubo resultados</p>";
+        jokeList.innerHTML = "<li>No hubo resultados</li>";
       } else {
-        const jokeLinks = results.map((joke) => `<p>${joke}</p>`);
+        const jokeLinks = results.map((joke) => `<a href="ecomerse.html?joke=${encodeURIComponent(joke)}">${joke}</a>`);
         jokeList.innerHTML = jokeLinks.join("");
-        jokeContainer.textContent = results[0];
+        window.location.href = `ecomerse.html?joke=${encodeURIComponent(results[0])}`;
       }
     })
     .catch((error) => {
