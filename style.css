@@ -56,6 +56,8 @@ li{
   .other-products__wrapper {
     display: flex;
     justify-content: space-between;
+    width: 56%;
+    margin-left: 275px;
   }
   
   .other-products__btn {
@@ -85,8 +87,8 @@ li{
     margin-bottom: 53px;
   }
   .randomJokeButton__style{
-    margin-top: 26px;
+    margin-top: 61px;
     background: tomato;
     border-radius: 9px;
-    padding: 15px;
+    padding: 15px;  
   }
