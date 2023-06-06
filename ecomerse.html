@@ -14,45 +14,30 @@
         <img id="main-img" class="visualizer__img" src="images/product-shirt-white.jpg" />
         <p id="main-joke" class="visualizer__joke">Lorem ipsum dolor sit amet consectetur adipisicing elit. Pariatur repudiandae odit tempore architecto mollitia unde voluptatum! Ut nobis nisi ducimus? Nihil rem cupiditate atque cumque necessitatibus consequuntur enim perferendis iusto!</p>
       </div>
-      <div>
-        <div>
-          <input data-id="black" class="color" type="radio" name="color">
-          <label for="black">Black</label>
-        </div>
-        <div>
-          <input data-id="white" class="color" type="radio" name="color">
-          <label for="white">White</label>
-        </div>
-      </div>
     </section>
     <section class="product-details">
       <h1 id="title">White shirt with joke</h1>
       <p id="price">$20</p>
-      <div id="jokeList" class="joke-list">
+      <div id="jokeList" class="joke-list"></div>
+      <div class="buttom__color">
+        <div>
+          <input class="buttom__zise" data-id="black" class="color" type="radio" name="color">
+          <label for="black">Black</label>
+        </div>
+        <div>
+          <input class="buttom__zise" data-id="white" class="color" type="radio" name="color">
+          <label for="white">White</label>
+        </div>
       </div>
+      <button id="randomJokeButton" class="randomJokeButton__style">Generar chiste aleatorio</button>
     </section>
   </main>
   <section class="other-products">
-    <h2>Choose another product</h2>
-    <div id="other-products-wrap" class="other-products__wrapper">
-    </div>
-  </section>
-  <section class="product-details">
-    <h1 id="title">White shirt with joke</h1>
-    <p id="price">$20</p>
-    <div id="jokeList" class="joke-list"></div>
-    <button id="randomJokeButton">Generar chiste aleatorio</button>
+    <h2 class="title__product">Choose another product</h2>
+    <div id="other-products-wrap" class="other-products__wrapper"></div>
   </section>
   
   <script type="module" src="src/app.js"></script>
-  <script>
-    const urlParams = new URLSearchParams(window.location.search);
-    const joke = urlParams.get("joke");
-
-    if (joke) {
-      const jokeList = document.querySelector("#jokeList");
-      jokeList.innerHTML = `<a href="ecomerse.html">${joke}</a>`;
-    }
-  </script>
+  <script type="module" src="src/components/randomJoke.js"></script>
 </body>
 </html>

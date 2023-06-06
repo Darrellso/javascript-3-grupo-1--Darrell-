@@ -28,9 +28,12 @@ li{
   }
   
   .visualizer {
+    border: black;
+    border-style: groove;
     position: relative;
-    width: 100%;
-    height: 500px;
+    width: 54%;
+    height: 331px;
+    left: 221px;
   }
   
   .visualizer__img {
@@ -66,4 +69,24 @@ li{
     width: 100%;
     height: 100%;
     object-fit: cover;
+  }
+  .buttom__color{
+    display: flex;
+  }
+
+  .buttom__zise{
+    height: 30px;
+    width: 35px;
+  }
+
+  .title__product{
+    margin-left: 40%;
+    margin-top: 10%;
+    margin-bottom: 53px;
+  }
+  .randomJokeButton__style{
+    margin-top: 26px;
+    background: tomato;
+    border-radius: 9px;
+    padding: 15px;
   }
