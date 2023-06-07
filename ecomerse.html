@@ -19,7 +19,7 @@
       <h1 id="title">White shirt with joke</h1>
       <p id="price">$20</p>
       <div id="jokeList" class="joke-list"></div>
-      <div class="buttom__color">
+      <div class="button__color">
         <div>
           <input data-id="black" class="color" type="radio" name="color">
           <label for="black">Black</label>
@@ -28,15 +28,21 @@
           <input data-id="white" class="color" type="radio" name="color">
           <label for="white">White</label>
         </div>
+      </div>
       <button id="randomJokeButton" class="randomJokeButton__style">Generar chiste aleatorio</button>
+      <button id="add-to-cart-btn">Agregar al carrito</button>
     </section>
   </main>
   <section class="other-products">
     <h2 class="title__product">Choose another product</h2>
     <div id="other-products-wrap" class="other-products__wrapper"></div>
   </section>
-  
+  <div id="cart" class="cart">
+    <button id="cart-open-button" class="cart-open-button">Cart</button>
+    <div id="cart-items" class="cart-items"></div>
+    <button id="cart-close-button" class="cart-close-button">Close</button>
+  </div>
+
   <script type="module" src="src/ecomerse.js"></script>
-  <script type="module" src="src/components/randomJoke.js"></script>
 </body>
 </html>
