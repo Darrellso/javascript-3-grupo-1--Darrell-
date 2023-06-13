@@ -1,6 +1,6 @@
 import { getEvents } from './api.js';
 import { formatDate, formatPrice, formatLocation } from './utils.js';
-import { eventCache } from './cache.js'; // Importa el objeto eventCache
+import { eventCache } from './cache.js'; 
 
 document.addEventListener('DOMContentLoaded', init);
 
