@@ -1,6 +1,7 @@
 import { getEvents } from './api.js';
 import { formatDate, formatPrice, formatLocation } from './utils.js';
-import { eventCache } from './cache.js'; 
+import { eventCache } from './cache.js';
+import { State } from './estado.js';
 
 document.addEventListener('DOMContentLoaded', init);
 
@@ -44,6 +45,7 @@ function init() {
   function createEventElement(event) {
     const eventElement = document.createElement('div');
     eventElement.classList.add('event');
+    eventElement.dataset.name = event.name;
 
     const formattedDate = formatDate(new Date(event.date));
     const formattedPrice = formatPrice(event.price);
@@ -57,6 +59,45 @@ function init() {
       <p>Price: ${formattedPrice}</p>
     `;
 
+    const favoriteBtn = createFavoriteButton(event.name);
+    eventElement.appendChild(favoriteBtn);
+
     return eventElement;
+  }
+
+  function createFavoriteButton(eventName) {
+    const favoriteBtn = document.createElement('button');
+    favoriteBtn.classList.add('favorite-btn');
+
+    if (getState().isEventInFavorites(eventName)) {
+      favoriteBtn.classList.add('favorite');
+    }
+
+    favoriteBtn.addEventListener('click', () => toggleFavorite(eventName));
+
+    return favoriteBtn;
+  }
+
+  function toggleFavorite(eventName) {
+    const state = getState();
+    const isFavorite = state.isEventInFavorites(eventName);
+
+    if (isFavorite) {
+      state.removeFromFavorites(eventName);
+    } else {
+      state.addToFavorites(eventName);
+    }
+
+    const favoriteBtns = document.querySelectorAll('.favorite-btn');
+    favoriteBtns.forEach(btn => {
+      const btnEventName = btn.parentNode.dataset.name;
+      if (btnEventName === eventName) {
+        btn.classList.toggle('favorite');
+      }
+    });
+  }
+
+  function getState() {
+    return new State();
   }
 }

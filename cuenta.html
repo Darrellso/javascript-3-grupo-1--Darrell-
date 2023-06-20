@@ -9,16 +9,15 @@
     <button class="tab" id="favorites-tab">Favorites</button>
     <button class="tab" id="interested-tab">Interested</button>
     <button class="tab" id="going-tab">Going</button>
-    <button class="tab" id="my-account-tab">My Account</button>
   </div>
   <div id="event-grid" class="event-grid"></div>
 
   <script type="module" src="./scripts/my-account.js"></script>
   <script type="module" src="./scripts/estado.js"></script>
   <script>
-    document.getElementById('my-account-tab').addEventListener('click', function() {
-      window.location.href = './cuenta.html'; // Reemplaza 'my-account.html' con la URL de la página a la que deseas redirigir
-    });
+    const favoriteBtn = document.createElement('button');
+    favoriteBtn.classList.add('favorite-btn');
+    document.getElementById('event-grid').appendChild(favoriteBtn);
   </script>
 </body>
 </html>
