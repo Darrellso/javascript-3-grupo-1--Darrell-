@@ -1,3 +1,5 @@
+// app.js
+
 import { getEvents } from './api.js';
 import { formatDate, formatPrice, formatLocation } from './utils.js';
 import { eventCache } from './cache.js';
@@ -11,6 +13,7 @@ function init() {
   const businessTab = document.getElementById('business-tab');
   const foodTab = document.getElementById('food-tab');
   const artTab = document.getElementById('art-tab');
+  const myAccountTab = document.getElementById('my-account-tab');
   const eventGrid = document.getElementById('event-grid');
 
   musicTab.addEventListener('click', () => loadEvents('music'));
@@ -18,6 +21,9 @@ function init() {
   businessTab.addEventListener('click', () => loadEvents('business'));
   foodTab.addEventListener('click', () => loadEvents('food'));
   artTab.addEventListener('click', () => loadEvents('art'));
+  myAccountTab.addEventListener('click', () => {
+    window.location.href = './cuenta.html';
+  });
 
   function loadEvents(category) {
     if (category in eventCache) {
@@ -57,44 +63,28 @@ function init() {
       <p>Date: ${formattedDate}</p>
       <p>Location: ${formattedLocation}</p>
       <p>Price: ${formattedPrice}</p>
+      <button class="favorite-btn" data-event="${event.name}">
+        <i class="far fa-heart"></i>
+      </button>
     `;
 
-    const favoriteBtn = createFavoriteButton(event.name);
-    eventElement.appendChild(favoriteBtn);
+    const favoriteBtn = eventElement.querySelector('.favorite-btn');
+    favoriteBtn.addEventListener('click', () => toggleFavorite(favoriteBtn));
 
     return eventElement;
   }
 
-  function createFavoriteButton(eventName) {
-    const favoriteBtn = document.createElement('button');
-    favoriteBtn.classList.add('favorite-btn');
+  function toggleFavorite(btn) {
+    btn.classList.toggle('favorite');
 
-    if (getState().isEventInFavorites(eventName)) {
-      favoriteBtn.classList.add('favorite');
-    }
-
-    favoriteBtn.addEventListener('click', () => toggleFavorite(eventName));
-
-    return favoriteBtn;
-  }
-
-  function toggleFavorite(eventName) {
+    const eventName = btn.dataset.event;
     const state = getState();
-    const isFavorite = state.isEventInFavorites(eventName);
 
-    if (isFavorite) {
-      state.removeFromFavorites(eventName);
-    } else {
+    if (btn.classList.contains('favorite')) {
       state.addToFavorites(eventName);
+    } else {
+      state.removeFromFavorites(eventName);
     }
-
-    const favoriteBtns = document.querySelectorAll('.favorite-btn');
-    favoriteBtns.forEach(btn => {
-      const btnEventName = btn.parentNode.dataset.name;
-      if (btnEventName === eventName) {
-        btn.classList.toggle('favorite');
-      }
-    });
   }
 
   function getState() {

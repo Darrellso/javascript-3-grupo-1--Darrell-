@@ -1,24 +1,21 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>My Account</title>
+  <title>Eventos</title>
   <link rel="stylesheet" href="styles.css">
+  <script src="https://kit.fontawesome.com/32b835fb2c.js" crossorigin="anonymous"></script>
 </head>
 <body>
   <div class="tabs">
-    <button class="tab" id="favorites-tab">Favorites</button>
-    <button class="tab" id="interested-tab">Interested</button>
-    <button class="tab" id="going-tab">Going</button>
+    <button class="tab" id="music-tab">Music</button>
+    <button class="tab" id="sports-tab">Sports</button>
+    <button class="tab" id="business-tab">Business</button>
+    <button class="tab" id="food-tab">Food</button>
+    <button class="tab" id="art-tab">Art</button>
     <button class="tab" id="my-account-tab">My Account</button>
   </div>
   <div id="event-grid" class="event-grid"></div>
 
-  <script type="module" src="./scripts/my-account.js"></script>
-  <script type="module" src="./scripts/estado.js"></script>
-  <script>
-    document.getElementById('my-account-tab').addEventListener('click', function() {
-      window.location.href = './cuenta.html'; // Reemplaza 'my-account.html' con la URL de la página a la que deseas redirigir
-    });
-  </script>
+  <script type="module" src="./scripts/app.js"></script>
 </body>
 </html>
