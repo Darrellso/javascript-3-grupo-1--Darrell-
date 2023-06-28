@@ -3,7 +3,7 @@
 import { getEvents } from './api.js';
 import { formatDate, formatPrice, formatLocation } from './utils.js';
 import { eventCache } from './cache.js';
-import { State } from './estado.js';
+import Estado from './estado.js';
 
 document.addEventListener('DOMContentLoaded', init);
 
@@ -69,25 +69,23 @@ function init() {
     `;
 
     const favoriteBtn = eventElement.querySelector('.favorite-btn');
-    favoriteBtn.addEventListener('click', () => toggleFavorite(favoriteBtn));
+    favoriteBtn.addEventListener('click', toggleFavorite);
 
     return eventElement;
   }
 
-  function toggleFavorite(btn) {
-    btn.classList.toggle('favorite');
+  function toggleFavorite() {
+    const eventName = this.dataset.event;
+    const state = Estado.getInstance();
 
-    const eventName = btn.dataset.event;
-    const state = getState();
-
-    if (btn.classList.contains('favorite')) {
-      state.addToFavorites(eventName);
-    } else {
+    if (state.isEventInFavorites(eventName)) {
       state.removeFromFavorites(eventName);
+      this.classList.remove('favorite');
+      this.querySelector('i').classList.remove('fas');
+    } else {
+      state.addToFavorites(eventName);
+      this.classList.add('favorite');
+      this.querySelector('i').classList.add('fas');
     }
-  }
-
-  function getState() {
-    return new State();
   }
 }

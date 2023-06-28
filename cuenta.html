@@ -2,22 +2,32 @@
 <html>
 <head>
   <title>My Account</title>
-  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" type="text/css" href="styles.css">
 </head>
 <body>
   <div class="tabs">
-    <button class="tab" id="favorites-tab">Favorites</button>
-    <button class="tab" id="interested-tab">Interested</button>
-    <button class="tab" id="going-tab">Going</button>
+    <div class="tab active" data-tab="favorites">Favorites</div>
+    <div class="tab" data-tab="interested">Interested</div>
+    <div class="tab" data-tab="going">Going</div>
   </div>
-  <div id="event-grid" class="event-grid"></div>
 
-  <script type="module" src="./scripts/my-account.js"></script>
-  <script type="module" src="./scripts/estado.js"></script>
-  <script>
-    const favoriteBtn = document.createElement('button');
-    favoriteBtn.classList.add('favorite-btn');
-    document.getElementById('event-grid').appendChild(favoriteBtn);
-  </script>
+  <div class="tab-content favorites">
+    <h2>Favorites</h2>
+    <div class="events-container"></div>
+  </div>
+
+  <div class="tab-content interested">
+    <h2>Interested</h2>
+    <div class="events-container"></div>
+  </div>
+
+  <div class="tab-content going">
+    <h2>Going</h2>
+    <div class="events-container"></div>
+  </div>
+
+  <script src="./scripts/estado.js"></script>
+  <script src="./scripts/tabs.js"></script>
+  <script src="./scripts/my-account.js"></script>
 </body>
 </html>
