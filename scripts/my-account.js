@@ -1,60 +1,71 @@
-// my-account.js
+// // my-account.js
 
-import { State } from './estado.js';
-import { createEventElement } from './utils.js';
+// document.addEventListener('DOMContentLoaded', init);
 
-document.addEventListener('DOMContentLoaded', init);
+// function init() {
+//   const favoritesTab = document.querySelector('.tab[data-tab="favorites"]');
+//   const interestedTab = document.querySelector('.tab[data-tab="interested"]');
+//   const goingTab = document.querySelector('.tab[data-tab="going"]');
+//   const favoritesContent = document.querySelector('.tab-content.favorites .events-container');
+//   const interestedContent = document.querySelector('.tab-content.interested .events-container');
+//   const goingContent = document.querySelector('.tab-content.going .events-container');
 
-function init() {
-  const favoritesTab = document.getElementById('favorites-tab');
-  const interestedTab = document.getElementById('interested-tab');
-  const goingTab = document.getElementById('going-tab');
-  const eventGrid = document.getElementById('event-grid');
+//   favoritesTab.addEventListener('click', () => showEvents('favorites'));
+//   interestedTab.addEventListener('click', () => showEvents('interested'));
+//   goingTab.addEventListener('click', () => showEvents('going'));
 
-  favoritesTab.addEventListener('click', () => showEvents(State.getFavorites()));
-  interestedTab.addEventListener('click', () => showEvents(State.getInterested()));
-  goingTab.addEventListener('click', () => showEvents(State.getGoing()));
+//   function showEvents(list) {
+//     // Hide all tab contents
+//     hideAllTabContents();
 
-  function showEvents(eventNames) {
-    eventGrid.innerHTML = '';
+//     // Show selected tab content and load events
+//     switch (list) {
+//       case 'favorites':
+//         favoritesTab.classList.add('active');
+//         favoritesContent.style.display = 'block';
+//         loadEvents(favoritesContent, 'favorites');
+//         break;
+//       case 'interested':
+//         interestedTab.classList.add('active');
+//         interestedContent.style.display = 'block';
+//         loadEvents(interestedContent, 'interested');
+//         break;
+//       case 'going':
+//         goingTab.classList.add('active');
+//         goingContent.style.display = 'block';
+//         loadEvents(goingContent, 'going');
+//         break;
+//     }
+//   }
 
-    if (eventNames.length === 0) {
-      eventGrid.innerHTML = `<p>There are no events in your list.</p>`;
-      return;
-    }
+//   function hideAllTabContents() {
+//     favoritesTab.classList.remove('active');
+//     interestedTab.classList.remove('active');
+//     goingTab.classList.remove('active');
+//     favoritesContent.style.display = 'none';
+//     interestedContent.style.display = 'none';
+//     goingContent.style.display = 'none';
+//   }
 
-    eventNames.forEach(eventName => {
-      const event = State.getEvent(eventName);
-      if (event) {
-        const eventElement = createEventElement(event);
-        eventGrid.appendChild(eventElement);
+//   function loadEvents(container, list) {
+//     const state = Estado.getInstance();
+//     const events = state.getEventsByList(list);
 
-        const removeBtn = createRemoveButton(eventName);
-        eventElement.appendChild(removeBtn);
-      }
-    });
-  }
+//     if (events.length > 0) {
+//       container.innerHTML = '';
+//       events.forEach(event => {
+//         const eventElement = createEventElement(event);
+//         container.appendChild(eventElement);
+//       });
+//     } else {
+//       container.innerHTML = 'There are no events in your ' + list;
+//     }
+//   }
 
-  function createRemoveButton(eventName) {
-    const removeBtn = document.createElement('button');
-    removeBtn.classList.add('remove-btn');
-    removeBtn.textContent = 'Remove';
-    removeBtn.addEventListener('click', () => {
-      removeFromList(eventName);
-      showEvents(State.getCurrentList());
-    });
-    return removeBtn;
-  }
+//   // Helper function to create event element (similar to createEventElement in app.js)
+//   function createEventElement(event) {
+//     // ...
 
-  function removeFromList(eventName) {
-    if (State.isEventInFavorites(eventName)) {
-      State.removeFromFavorites(eventName);
-    }
-    if (State.isEventInInterested(eventName)) {
-      State.removeFromInterested(eventName);
-    }
-    if (State.isEventInGoing(eventName)) {
-      State.removeFromGoing(eventName);
-    }
-  }
-}
+//     return eventElement;
+//   }
+// }

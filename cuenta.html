@@ -2,32 +2,124 @@
 <html>
 <head>
   <title>My Account</title>
-  <link rel="stylesheet" type="text/css" href="styles.css">
+  <style>
+    .tab {
+      overflow: hidden;
+    }
+
+    .tab button {
+      background-color: #f2f2f2;
+      border: none;
+      outline: none;
+      cursor: pointer;
+      padding: 10px 20px;
+      transition: 0.3s;
+    }
+
+    .tab button:hover {
+      background-color: #ddd;
+    }
+
+    .tab button.active {
+      background-color: #ccc;
+    }
+
+    .tabcontent {
+      display: none;
+      padding: 20px;
+      border: 1px solid #ccc;
+      border-top: none;
+    }
+
+    .empty-message {
+      color: gray;
+      text-align: center;
+    }
+
+    .event {
+      border: 1px solid #ccc;
+      padding: 10px;
+      margin-bottom: 10px;
+    }
+  </style>
 </head>
 <body>
-  <div class="tabs">
-    <div class="tab active" data-tab="favorites">Favorites</div>
-    <div class="tab" data-tab="interested">Interested</div>
-    <div class="tab" data-tab="going">Going</div>
+  <div class="tab">
+    <button class="tablinks" onclick="openTab(event, 'favorites')">Favorites</button>
+    <button class="tablinks" onclick="openTab(event, 'interested')">Interested</button>
+    <button class="tablinks" onclick="openTab(event, 'going')">Going</button>
   </div>
 
-  <div class="tab-content favorites">
-    <h2>Favorites</h2>
-    <div class="events-container"></div>
+  <div id="favorites" class="tabcontent">
+    <h3>Favorites</h3>
+    <div id="favorites-grid"></div>
+    <p id="favorites-message" class="empty-message">There are no events in your favorites.</p>
   </div>
 
-  <div class="tab-content interested">
-    <h2>Interested</h2>
-    <div class="events-container"></div>
+  <div id="interested" class="tabcontent">
+    <h3>Interested</h3>
+    <div id="interested-grid"></div>
+    <p id="interested-message" class="empty-message">There are no events in your interested list.</p>
   </div>
 
-  <div class="tab-content going">
-    <h2>Going</h2>
-    <div class="events-container"></div>
+  <div id="going" class="tabcontent">
+    <h3>Going</h3>
+    <div id="going-grid"></div>
+    <p id="going-message" class="empty-message">There are no events in your going list.</p>
   </div>
 
-  <script src="./scripts/estado.js"></script>
-  <script src="./scripts/tabs.js"></script>
-  <script src="./scripts/my-account.js"></script>
+  <script>
+    var favoriteEvents = []; // Lista de eventos favoritos
+    var interestedEvents = []; // Lista de eventos de interés
+    var goingEvents = []; // Lista de eventos a los que asistirá el usuario
+
+    function openTab(evt, tabName) {
+      var i, tabcontent, tablinks;
+      tabcontent = document.getElementsByClassName("tabcontent");
+      for (i = 0; i < tabcontent.length; i++) {
+        tabcontent[i].style.display = "none";
+      }
+      tablinks = document.getElementsByClassName("tablinks");
+      for (i = 0; i < tablinks.length; i++) {
+        tablinks[i].className = tablinks[i].className.replace(" active", "");
+      }
+      document.getElementById(tabName).style.display = "block";
+      evt.currentTarget.className += " active";
+
+      // Mostrar los eventos correspondientes a la pestaña seleccionada
+      if (tabName === "favorites") {
+        showEvents(favoriteEvents, "favorites-grid", "favorites-message");
+      } else if (tabName === "interested") {
+        showEvents(interestedEvents, "interested-grid", "interested-message");
+      } else if (tabName === "going") {
+        showEvents(goingEvents, "going-grid", "going-message");
+      }
+    }
+
+    function showEvents(events, gridId, messageId) {
+      var grid = document.getElementById(gridId);
+      var message = document.getElementById(messageId);
+
+      // Limpiar el contenido previo
+      grid.innerHTML = "";
+
+      if (events.length === 0) {
+        // Mostrar el mensaje de lista vacía
+        message.style.display = "block";
+      } else {
+        // Ocultar el mensaje de lista vacía
+        message.style.display = "none";
+
+        // Mostrar los eventos en la cuadrícula
+        for (var i = 0; i < events.length; i++) {
+          var event = events[i];
+          var eventDiv = document.createElement("div");
+          eventDiv.className = "event";
+          eventDiv.innerHTML = event.name; // Mostrar el nombre del evento, ajusta esto según tus datos
+          grid.appendChild(eventDiv);
+        }
+      }
+    }
+  </script>
 </body>
 </html>

@@ -24,7 +24,6 @@ function init() {
   myAccountTab.addEventListener('click', () => {
     window.location.href = './cuenta.html';
   });
-
   function loadEvents(category) {
     if (category in eventCache) {
       const events = eventCache[category];
@@ -63,29 +62,94 @@ function init() {
       <p>Date: ${formattedDate}</p>
       <p>Location: ${formattedLocation}</p>
       <p>Price: ${formattedPrice}</p>
-      <button class="favorite-btn" data-event="${event.name}">
-        <i class="far fa-heart"></i>
-      </button>
     `;
 
-    const favoriteBtn = eventElement.querySelector('.favorite-btn');
-    favoriteBtn.addEventListener('click', toggleFavorite);
+    const state = Estado.getInstance();
+    const eventName = event.name;
+
+    // Add favorite button
+    const favoriteBtn = document.createElement('button');
+    favoriteBtn.classList.add('favorite-btn');
+    favoriteBtn.dataset.event = eventName;
+    favoriteBtn.innerHTML = `<i class="far fa-heart"></i>`;
+    favoriteBtn.addEventListener('click', () => toggleFavorite(eventName));
+    eventElement.appendChild(favoriteBtn);
+
+    // Add interested button
+    const interestedBtn = document.createElement('button');
+    interestedBtn.classList.add('interested-btn');
+    interestedBtn.dataset.event = eventName;
+    interestedBtn.textContent = 'Interested';
+    interestedBtn.addEventListener('click', () => toggleInterested(eventName));
+    eventElement.appendChild(interestedBtn);
+
+    // Add going button
+    const goingBtn = document.createElement('button');
+    goingBtn.classList.add('going-btn');
+    goingBtn.dataset.event = eventName;
+    goingBtn.textContent = 'Going!';
+    goingBtn.addEventListener('click', () => toggleGoing(eventName));
+    eventElement.appendChild(goingBtn);
+
+    // Check state and update buttons
+    if (state.isEventInFavorites(eventName)) {
+      favoriteBtn.classList.add('favorite');
+    }
+    if (state.isEventInInterested(eventName)) {
+      interestedBtn.style.display = 'none';
+    }
+    if (state.isEventGoing(eventName)) {
+      goingBtn.style.display = 'none';
+    }
 
     return eventElement;
   }
 
-  function toggleFavorite() {
-    const eventName = this.dataset.event;
+  function toggleFavorite(eventName) {
     const state = Estado.getInstance();
 
     if (state.isEventInFavorites(eventName)) {
       state.removeFromFavorites(eventName);
-      this.classList.remove('favorite');
-      this.querySelector('i').classList.remove('fas');
+      const favoriteBtn = eventGrid.querySelector(`.favorite-btn[data-event="${eventName}"]`);
+      favoriteBtn.classList.remove('favorite');
     } else {
       state.addToFavorites(eventName);
-      this.classList.add('favorite');
-      this.querySelector('i').classList.add('fas');
+      const favoriteBtn = eventGrid.querySelector(`.favorite-btn[data-event="${eventName}"]`);
+      favoriteBtn.classList.add('favorite');
+    }
+  }
+
+  function toggleInterested(eventName) {
+    const state = Estado.getInstance();
+
+    if (state.isEventInInterested(eventName)) {
+      state.removeFromInterested(eventName);
+    } else {
+      state.addToInterested(eventName);
+      state.removeFromGoing(eventName);
+
+      const interestedBtn = eventGrid.querySelector(`.interested-btn[data-event="${eventName}"]`);
+      const goingBtn = eventGrid.querySelector(`.going-btn[data-event="${eventName}"]`);
+
+      interestedBtn.style.display = 'none';
+      goingBtn.style.display = 'inline-block';
+    }
+  }
+
+  function toggleGoing(eventName) {
+    const state = Estado.getInstance();
+
+    if (state.isEventGoing(eventName)) {
+      state.removeFromGoing(eventName);
+    } else {
+      state.addToGoing(eventName);
+      state.removeFromInterested(eventName);
+
+      const interestedBtn = eventGrid.querySelector(`.interested-btn[data-event="${eventName}"]`);
+      const goingBtn = eventGrid.querySelector(`.going-btn[data-event="${eventName}"]`);
+
+      goingBtn.style.display = 'none';
+      interestedBtn.style.display = 'inline-block';
     }
   }
 }

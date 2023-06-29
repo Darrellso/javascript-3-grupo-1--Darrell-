@@ -1,3 +1,4 @@
+//estado.js
 class Estado {
   constructor() {
     this.state = {
