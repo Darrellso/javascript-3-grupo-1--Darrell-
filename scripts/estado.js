@@ -1,11 +1,8 @@
-//estado.js
 class Estado {
   constructor() {
-    this.state = {
-      favorites: [],
-      interested: [],
-      going: []
-    };
+    this.favorites = [];
+    this.interested = [];
+    this.going = [];
   }
 
   static getInstance() {
@@ -15,66 +12,79 @@ class Estado {
     return Estado.instance;
   }
 
-  isEventInFavorites(eventName) {
-    return this.state.favorites.includes(eventName);
+  setFavorites(favorites) {
+    this.favorites = favorites;
+  }
+
+  getFavorites() {
+    return this.favorites;
   }
 
   addToFavorites(eventName) {
-    this.state.favorites.push(eventName);
-    this.saveState();
+    if (!this.isEventInFavorites(eventName)) {
+      this.favorites.push(eventName);
+    }
   }
 
   removeFromFavorites(eventName) {
-    const index = this.state.favorites.indexOf(eventName);
-    if (index > -1) {
-      this.state.favorites.splice(index, 1);
-      this.saveState();
+    const index = this.favorites.indexOf(eventName);
+    if (index !== -1) {
+      this.favorites.splice(index, 1);
+    }
+  }
+
+  isEventInFavorites(eventName) {
+    return this.favorites.includes(eventName);
+  }
+
+  setInterested(interested) {
+    this.interested = interested;
+  }
+
+  getInterested() {
+    return this.interested;
+  }
+
+  addToInterested(eventName) {
+    if (!this.isEventInInterested(eventName)) {
+      this.interested.push(eventName);
+    }
+  }
+
+  removeFromInterested(eventName) {
+    const index = this.interested.indexOf(eventName);
+    if (index !== -1) {
+      this.interested.splice(index, 1);
     }
   }
 
   isEventInInterested(eventName) {
-    return this.state.interested.includes(eventName);
+    return this.interested.includes(eventName);
   }
 
-  addToInterested(eventName) {
-    this.state.interested.push(eventName);
-    this.saveState();
+  setGoing(going) {
+    this.going = going;
   }
 
-  removeFromInterested(eventName) {
-    const index = this.state.interested.indexOf(eventName);
-    if (index > -1) {
-      this.state.interested.splice(index, 1);
-      this.saveState();
+  getGoing() {
+    return this.going;
+  }
+
+  addToGoing(eventName) {
+    if (!this.isEventGoing(eventName)) {
+      this.going.push(eventName);
+    }
+  }
+
+  removeFromGoing(eventName) {
+    const index = this.going.indexOf(eventName);
+    if (index !== -1) {
+      this.going.splice(index, 1);
     }
   }
 
   isEventGoing(eventName) {
-    return this.state.going.includes(eventName);
-  }
-
-  addToGoing(eventName) {
-    this.state.going.push(eventName);
-    this.saveState();
-  }
-
-  removeFromGoing(eventName) {
-    const index = this.state.going.indexOf(eventName);
-    if (index > -1) {
-      this.state.going.splice(index, 1);
-      this.saveState();
-    }
-  }
-
-  saveState() {
-    localStorage.setItem('estado', JSON.stringify(this.state));
-  }
-
-  loadState() {
-    const savedState = localStorage.getItem('estado');
-    if (savedState) {
-      this.state = JSON.parse(savedState);
-    }
+    return this.going.includes(eventName);
   }
 }
 

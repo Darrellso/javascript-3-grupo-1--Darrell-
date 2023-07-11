@@ -1,9 +1,8 @@
-// app.js
-
 import { getEvents } from './api.js';
 import { formatDate, formatPrice, formatLocation } from './utils.js';
 import { eventCache } from './cache.js';
 import Estado from './estado.js';
+import { hideAllTabContents } from './tabs.js';
 
 document.addEventListener('DOMContentLoaded', init);
 
@@ -23,7 +22,26 @@ function init() {
   artTab.addEventListener('click', () => loadEvents('art'));
   myAccountTab.addEventListener('click', () => {
     window.location.href = './cuenta.html';
+    function init() {
+      // ...
+
+      loadEventsFromStorage(); // Cargar eventos desde el almacenamiento local
+    }
+
+    function loadEventsFromStorage() {
+      const savedEvents = localStorage.getItem('events');
+      if (savedEvents) {
+        const events = JSON.parse(savedEvents);
+        const state = Estado.getInstance();
+
+        state.setFavorites(events.favorites || []);
+        state.setInterested(events.interested || []);
+        state.setGoing(events.going || []);
+      }
+    }
+
   });
+
   function loadEvents(category) {
     if (category in eventCache) {
       const events = eventCache[category];
@@ -72,7 +90,7 @@ function init() {
     favoriteBtn.classList.add('favorite-btn');
     favoriteBtn.dataset.event = eventName;
     favoriteBtn.innerHTML = `<i class="far fa-heart"></i>`;
-    favoriteBtn.addEventListener('click', () => toggleFavorite(eventName));
+    favoriteBtn.addEventListener('click', () => toggleFavorite(eventName, favoriteBtn));
     eventElement.appendChild(favoriteBtn);
 
     // Add interested button
@@ -80,7 +98,7 @@ function init() {
     interestedBtn.classList.add('interested-btn');
     interestedBtn.dataset.event = eventName;
     interestedBtn.textContent = 'Interested';
-    interestedBtn.addEventListener('click', () => toggleInterested(eventName));
+    interestedBtn.addEventListener('click', () => toggleInterested(eventName, interestedBtn));
     eventElement.appendChild(interestedBtn);
 
     // Add going button
@@ -88,7 +106,7 @@ function init() {
     goingBtn.classList.add('going-btn');
     goingBtn.dataset.event = eventName;
     goingBtn.textContent = 'Going!';
-    goingBtn.addEventListener('click', () => toggleGoing(eventName));
+    goingBtn.addEventListener('click', () => toggleGoing(eventName, goingBtn));
     eventElement.appendChild(goingBtn);
 
     // Check state and update buttons
@@ -105,51 +123,63 @@ function init() {
     return eventElement;
   }
 
-  function toggleFavorite(eventName) {
+  function toggleFavorite(eventName, favoriteBtn) {
     const state = Estado.getInstance();
 
     if (state.isEventInFavorites(eventName)) {
       state.removeFromFavorites(eventName);
-      const favoriteBtn = eventGrid.querySelector(`.favorite-btn[data-event="${eventName}"]`);
       favoriteBtn.classList.remove('favorite');
     } else {
       state.addToFavorites(eventName);
-      const favoriteBtn = eventGrid.querySelector(`.favorite-btn[data-event="${eventName}"]`);
       favoriteBtn.classList.add('favorite');
     }
+
+    saveEvents(); // Guardar eventos en el almacenamiento local
   }
 
-  function toggleInterested(eventName) {
+
+  function toggleInterested(eventName, interestedBtn) {
     const state = Estado.getInstance();
 
     if (state.isEventInInterested(eventName)) {
       state.removeFromInterested(eventName);
+      interestedBtn.style.display = 'block';
     } else {
       state.addToInterested(eventName);
       state.removeFromGoing(eventName);
-
-      const interestedBtn = eventGrid.querySelector(`.interested-btn[data-event="${eventName}"]`);
-      const goingBtn = eventGrid.querySelector(`.going-btn[data-event="${eventName}"]`);
-
       interestedBtn.style.display = 'none';
-      goingBtn.style.display = 'inline-block';
     }
+
+    saveEvents(); // Guardar eventos en el almacenamiento local
   }
 
-  function toggleGoing(eventName) {
-    const state = Estado.getInstance();
 
+  function toggleGoing(eventName, goingBtn) {
+    const state = Estado.getInstance();
+  
     if (state.isEventGoing(eventName)) {
       state.removeFromGoing(eventName);
+      goingBtn.style.display = 'block';
     } else {
       state.addToGoing(eventName);
       state.removeFromInterested(eventName);
-
-      const interestedBtn = eventGrid.querySelector(`.interested-btn[data-event="${eventName}"]`);
-      const goingBtn = eventGrid.querySelector(`.going-btn[data-event="${eventName}"]`);
-
       goingBtn.style.display = 'none';
-      interestedBtn.style.display = 'inline-block';
+      
+      saveEvents(); // Guardar eventos en el almacenamiento local
+
     }
   }
+  
+
+  function saveEvents() {
+    const state = Estado.getInstance();
+    const events = {
+      favorites: state.getFavorites(),
+      interested: state.getInterested(),
+      going: state.getGoing(),
+    };
+
+    localStorage.setItem('events', JSON.stringify(events));
+  }
 }
+

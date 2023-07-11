@@ -1,4 +1,3 @@
-//tabs.js
 function hideAllTabContents() {
   const favoritesTab = document.querySelector('.tab[data-tab="favorites"]');
   const interestedTab = document.querySelector('.tab[data-tab="interested"]');

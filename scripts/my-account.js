@@ -1,71 +1,119 @@
-// // my-account.js
+document.addEventListener('DOMContentLoaded', init);
 
-// document.addEventListener('DOMContentLoaded', init);
+function init() {
+  const favoritesTab = document.querySelector('.tab[data-tab="favorites"]');
+  const interestedTab = document.querySelector('.tab[data-tab="interested"]');
+  const goingTab = document.querySelector('.tab[data-tab="going"]');
+  const favoritesContent = document.querySelector('.tab-content.favorites .events-container');
+  const interestedContent = document.querySelector('.tab-content.interested .events-container');
+  const goingContent = document.querySelector('.tab-content.going .events-container');
 
-// function init() {
-//   const favoritesTab = document.querySelector('.tab[data-tab="favorites"]');
-//   const interestedTab = document.querySelector('.tab[data-tab="interested"]');
-//   const goingTab = document.querySelector('.tab[data-tab="going"]');
-//   const favoritesContent = document.querySelector('.tab-content.favorites .events-container');
-//   const interestedContent = document.querySelector('.tab-content.interested .events-container');
-//   const goingContent = document.querySelector('.tab-content.going .events-container');
+  if (favoritesTab) {
+    favoritesTab.addEventListener('click', () => showEvents('favorites'));
+  }
+  if (interestedTab) {
+    interestedTab.addEventListener('click', () => showEvents('interested'));
+  }
+  if (goingTab) {
+    goingTab.addEventListener('click', () => showEvents('going'));
+  }
 
-//   favoritesTab.addEventListener('click', () => showEvents('favorites'));
-//   interestedTab.addEventListener('click', () => showEvents('interested'));
-//   goingTab.addEventListener('click', () => showEvents('going'));
+  function showEvents(list) {
 
-//   function showEvents(list) {
-//     // Hide all tab contents
-//     hideAllTabContents();
+    hideAllTabContents();
 
-//     // Show selected tab content and load events
-//     switch (list) {
-//       case 'favorites':
-//         favoritesTab.classList.add('active');
-//         favoritesContent.style.display = 'block';
-//         loadEvents(favoritesContent, 'favorites');
-//         break;
-//       case 'interested':
-//         interestedTab.classList.add('active');
-//         interestedContent.style.display = 'block';
-//         loadEvents(interestedContent, 'interested');
-//         break;
-//       case 'going':
-//         goingTab.classList.add('active');
-//         goingContent.style.display = 'block';
-//         loadEvents(goingContent, 'going');
-//         break;
-//     }
-//   }
+    switch (list) {
+      case 'favorites':
+        if (favoritesTab) {
+          favoritesTab.classList.add('active');
+        }
+        if (favoritesContent) {
+          favoritesContent.style.display = 'block';
+          loadEvents(favoritesContent, 'favorites');
+        }
+        break;
+      case 'interested':
+        if (interestedTab) {
+          interestedTab.classList.add('active');
+        }
+        if (interestedContent) {
+          interestedContent.style.display = 'block';
+          loadEvents(interestedContent, 'interested');
+        }
+        break;
+      case 'going':
+        if (goingTab) {
+          goingTab.classList.add('active');
+        }
+        if (goingContent) {
+          goingContent.style.display = 'block';
+          loadEvents(goingContent, 'going');
+        }
+        break;
+    }
+  }
 
-//   function hideAllTabContents() {
-//     favoritesTab.classList.remove('active');
-//     interestedTab.classList.remove('active');
-//     goingTab.classList.remove('active');
-//     favoritesContent.style.display = 'none';
-//     interestedContent.style.display = 'none';
-//     goingContent.style.display = 'none';
-//   }
+  function hideAllTabContents() {
+    if (favoritesTab) {
+      favoritesTab.classList.remove('active');
+    }
+    if (interestedTab) {
+      interestedTab.classList.remove('active');
+    }
+    if (goingTab) {
+      goingTab.classList.remove('active');
+    }
+    if (favoritesContent) {
+      favoritesContent.style.display = 'none';
+    }
+    if (interestedContent) {
+      interestedContent.style.display = 'none';
+    }
+    if (goingContent) {
+      goingContent.style.display = 'none';
+    }
+  }
 
-//   function loadEvents(container, list) {
-//     const state = Estado.getInstance();
-//     const events = state.getEventsByList(list);
+  function loadEvents(container, list) {
+    const state = Estado.getInstance();
+    const events = state.getEventsByList(list);
 
-//     if (events.length > 0) {
-//       container.innerHTML = '';
-//       events.forEach(event => {
-//         const eventElement = createEventElement(event);
-//         container.appendChild(eventElement);
-//       });
-//     } else {
-//       container.innerHTML = 'There are no events in your ' + list;
-//     }
-//   }
+    if (container && events.length > 0) {
+      container.innerHTML = '';
+      events.forEach(event => {
+        const eventElement = createEventElement(event);
+        container.appendChild(eventElement);
+      });
+    } else if (container) {
+      container.innerHTML = 'There are no events in your ' + list;
+    }
+  }
 
-//   // Helper function to create event element (similar to createEventElement in app.js)
-//   function createEventElement(event) {
-//     // ...
 
-//     return eventElement;
-//   }
-// }
+  function createEventElement(event) {
+    // ...
+
+    return eventElement;
+  }
+  function openTab(event, tabName) {
+
+    const tabContents = document.getElementsByClassName("tabcontent");
+    for (let i = 0; i < tabContents.length; i++) {
+      tabContents[i].style.display = "none";
+    }
+  
+
+    const tabLinks = document.getElementsByClassName("tablinks");
+    for (let i = 0; i < tabLinks.length; i++) {
+      tabLinks[i].classList.remove("active");
+    }
+  
+
+    const selectedTab = document.getElementById(tabName);
+    selectedTab.style.display = "block";
+  
+ 
+    event.currentTarget.classList.add("active");
+  }
+  
+}
