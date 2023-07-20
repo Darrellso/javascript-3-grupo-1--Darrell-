@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Plant Recommendation</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="container">
+      <h1>Plant Recommendation</h1>
+      <form id="plant-form">
+        <fieldset class="required">
+          <legend>Where will you place your plant?</legend>
+          <label>
+            <input
+              type="radio"
+              name="placement"
+              value="Inside with some indirect light"
+              required
+            />
+            Inside with some indirect light
+          </label>
+          <label>
+            <input
+              type="radio"
+              name="placement"
+              value="Inside with a lot of indirect light"
+              required
+            />
+            Inside with a lot of indirect light
+          </label>
+          <label>
+            <input type="radio" name="placement" value="Outside" required />
+            Outside
+          </label>
+        </fieldset>
+
+        <fieldset class="required">
+          <legend>Will it receive direct sunlight?</legend>
+          <label>
+            <input type="radio" name="sunlight" value="Yes" required />
+            Yes
+          </label>
+          <label>
+            <input type="radio" name="sunlight" value="No" required />
+            No
+          </label>
+        </fieldset>
+
+        <fieldset class="required">
+          <legend>Do you have pets (cats or dogs)?</legend>
+          <label>
+            <input type="radio" name="pets" value="Yes" required />
+            Yes
+          </label>
+          <label>
+            <input type="radio" name="pets" value="No" required />
+            No
+          </label>
+        </fieldset>
+
+        <fieldset class="required">
+          <legend>Do you tend to overwater or underwater?</legend>
+          <label>
+            <input type="radio" name="watering" value="Overwater" required />
+            Overwater
+          </label>
+          <label>
+            <input type="radio" name="watering" value="Underwater" required />
+            Underwater
+          </label>
+          <label>
+            <input type="radio" name="watering" value="Neither" required />
+            Neither / I don't know
+          </label>
+        </fieldset>
+
+        <fieldset class="required">
+          <legend>How do you define your style?</legend>
+          <label>
+            <input
+              type="radio"
+              name="style"
+              value="I like minimalism and material colors"
+              required
+            />
+            I like minimalism and material colors
+          </label>
+          <label>
+            <input
+              type="radio"
+              name="style"
+              value="I like some decoration and simple colors"
+              required
+            />
+            I like some decoration and simple colors
+          </label>
+          <label>
+            <input
+              type="radio"
+              name="style"
+              value="I like a lot of decoration and bright colors"
+              required
+            />
+            I like a lot of decoration and bright colors
+          </label>
+        </fieldset>
+
+        <fieldset>
+          <legend>Do you want to add any extra elements to your plant?</legend>
+          <label>
+            <input type="checkbox" name="extras" value="Moss pole" />
+            Moss pole
+          </label>
+          <label>
+            <input type="checkbox" name="extras" value="Pebbles" />
+            Pebbles
+          </label>
+          <label>
+            <input type="checkbox" name="extras" value="Smaller plants" />
+            Smaller plants
+          </label>
+        </fieldset>
+
+        <div class="buttons">
+          <button type="submit">Get your plant!</button>
+          <button type="button" id="clear-button">Clear</button>
+        </div>
+      </form>
+
+      <div id="plant-card" style="display: none">
+        <h2 id="plant-name"></h2>
+        <div id="image-container">
+          <!-- Aquí se mostrarán las imágenes -->
+        </div>
+        <h3>Information:</h3>
+        <ul>
+          <li><strong>Soil:</strong> <span id="soil"></span></li>
+          <li><strong>Pot:</strong> <span id="pot"></span></li>
+          <li><strong>Color:</strong> <span id="color"></span></li>
+          <li><strong>Extras:</strong></li>
+          <ul id="extras"></ul>
+        </ul>
+      </div>
+    </div>
+    <script src="script.js"></script>
+  </body>
+</html>
