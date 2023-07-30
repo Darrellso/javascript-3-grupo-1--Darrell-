@@ -83,10 +83,34 @@ const plants = [
     color: 'yellow',
     extras: ['Pebbles'],
     toxic: false
-  }
+  },
+  // Plantas adicionales
+  {
+    name: 'Snake Plant',
+    soil: 'Easy Drainage Soil',
+    pot: 'Ceramic pot',
+    color: 'green',
+    extras: ['Moss pole'],
+    toxic: true
+  },
+  {
+    name: 'Peace Lily',
+    soil: 'Composted Soil',
+    pot: 'Simple pot decorated',
+    color: 'white',
+    extras: ['Pebbles', 'Mini Plants'],
+    toxic: true
+  },
+  {
+    name: 'Spider Plant',
+    soil: 'Composted Soil',
+    pot: 'Simple pot',
+    color: 'green',
+    extras: ['Moss pole'],
+    toxic: false
+  },
   // Agrega más plantas recomendadas según tus necesidades
 ];
-
 function capitalizeFirstLetter(text) {
   return text.charAt(0).toUpperCase() + text.slice(1);
 }
