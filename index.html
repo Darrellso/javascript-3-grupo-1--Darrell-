@@ -9,7 +9,7 @@
   <body>
     <div class="container">
       <h1>Plant Recommendation</h1>
-      <form id="plant-form">
+      <form id="form">
         <fieldset class="required">
           <legend>Where will you place your plant?</legend>
           <label>
@@ -129,12 +129,10 @@
         </div>
       </form>
 
-      <div id="recommendation" style="display: none"></div>
-      
       <div id="plant-card" style="display: none">
         <h2 id="plant-name"></h2>
         <div id="image-container">
-          <!-- Aquí se mostrarán las imágenes -->
+          <!-- Aquí se mostrará la imagen de la planta -->
         </div>
         <h3>Information:</h3>
         <ul>
@@ -146,117 +144,5 @@
         </ul>
       </div>
     <script src="./script.js"></script>
-    <script>
-      function initializeForm() {
-        const form = document.getElementById("form");
-        const plantContainer = document.getElementById("recommendation");
-  
-        form.addEventListener("submit", (event) => {
-          event.preventDefault();
-  
-          const place = document.querySelector('input[name="place"]:checked');
-          const sunlight = document.querySelector('input[name="sunlight"]:checked');
-          const pets = document.querySelector('input[name="pets"]:checked');
-          const water = document.querySelector('input[name="water"]:checked');
-          const style = document.querySelector('input[name="style"]:checked');
-          const extras = Array.from(document.querySelectorAll('input[name="extras"]:checked'));
-  
-          if (place && sunlight && pets && water && style) {
-            const builder = new PlantBuilder();
-  
-            if (place.value === "inside_indirect") {
-              builder.withName("Sansevieria").withPlantImage("plant-sansevieria");
-            } else if (place.value === "inside_lot") {
-              builder.withName("Aglaonema").withPlantImage("plant-aglaonema");
-            } else if (place.value === "outside") {
-              builder.withName("Aloe").withPlantImage("plant-aloe");
-            }
-  
-            if (sunlight.value === "yes") {
-              builder.withSoil("Composted Soil");
-            } else if (sunlight.value === "no") {
-              builder.withSoil("Fertilized Soil");
-            }
-  
-            if (pets.value === "yes") {
-              builder.withPot("Ceramic pot");
-              builder.withPotStyle("Substitute the soil for the easy drainage soil");
-            } else if (pets.value === "no") {
-              builder.withPot("Ceramic pot");
-            }
-  
-            if (water.value === "overwater") {
-              builder.withPotMaterial("Clay pot");
-            } else if (water.value === "underwater" || water.value === "neither") {
-              builder.withPotMaterial("Ceramic pot");
-            }
-  
-            if (style.value === "minimalism") {
-              builder.withPotStyle("Simple pot");
-            } else if (style.value === "decoration") {
-              builder.withPotStyle("Simple pot decorated");
-            } else if (style.value === "bright_colors") {
-              builder.withPotStyle("Painted pot decorated");
-            }
-  
-            const extrasList = extras.map((extra) => extra.value);
-            builder.withExtras(extrasList);
-  
-            const recommendation = builder.build();
-  
-            recommendedPlant(recommendation, plantContainer);
-          } else {
-            alert("Please check all boxes.");
-          }
-        });
-      }
-  
-      function recommendedPlant(recommendation, plantContainer) {
-        const imgPot = document.createElement("img");
-        imgPot.src = `./assets/images/pot-${recommendation.pot.replace(" pot", "")}.png`;
-  
-        const imgPlant = document.createElement("img");
-        imgPlant.src = `./assets/images/plant-${recommendation.name}.png`;
-  
-        const imgSoil = document.createElement("img");
-        imgSoil.src = `./assets/images/soil-${recommendation.soil.replace(" Soil", "")}.png`;
-  
-        recommendation.extras.forEach((extra) => {
-          const extraImage = document.createElement("img");
-          extraImage.src = `./assets/images/${extra}.png`;
-          plantContainer.appendChild(extraImage);
-        });
-  
-        plantContainer.innerHTML = "";
-        plantContainer.appendChild(imgPot);
-        plantContainer.appendChild(imgPlant);
-        plantContainer.appendChild(imgSoil);
-  
-        const recommendationInfo = document.createElement("div");
-        recommendationInfo.innerHTML = `
-          <p>The perfect plant for you is...</p>
-          <h3 class="plant-created-title">${recommendation.name}</h3>
-          <div class="empty-container"></div>
-          <div class="result-container">
-            <div class="result-text-left">
-              <p>Name</p>
-              <p>Soil</p>
-              <p>Pot</p>
-              <p>Extras</p>
-            </div>
-            <div class="result-text-right">
-              <p>${recommendation.name}</p>
-              <p>${recommendation.soil}</p>
-              <p>${recommendation.pot}</p>
-              <p>${recommendation.extras.join(", ")}</p>
-            </div>  
-          </div>
-        `;
-        plantContainer.appendChild(recommendationInfo);
-        plantContainer.style.display = "block";
-      }
-  
-      initializeForm();
-    </script>
   </body>
 </html>
