@@ -1,3 +1,4 @@
+//main.js
 import initializeForm from "./form.js";
 import recommendedPlant from "./recommendPlant.js";
 

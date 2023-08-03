@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>product</title>
+</head>
+<body>
+  <h1>Product Details</h1>
+  <div id="vista-previa-planta">
+      <!-- Vista previa de la planta personalizada aquí -->
+  </div>
+  <div id="product-info">
+      <!-- Información del producto (nombre, tipo de suelo, maceta, color, extras) aquí -->
+  </div>
+  <p>Precio: <span id="precio"></span></p>
+  <button id="botonOrderNow" disabled>Order now!</button>
+  <button id="volverPersonalizacion">Back to customization</button>
+
+  <!-- Accordions de información -->
+  <button class="accordion">Price breakdown</button>
+  <div class="panel">
+      <p>Aquí va el desglose del precio</p>
+  </div>
+
+  <button class="accordion">Inventory Alerts</button>
+  <div class="panel">
+      <p>Aquí van las alertas de inventario</p>
+  </div>
+
+  <button class="accordion">Plant description</button>
+  <div class="panel">
+      <p>Aquí va la descripción de la planta</p>
+  </div>
+
+  <button class="accordion">Caring tips</button>
+  <div class="panel">
+      <p>Aquí van los consejos de cuidado</p>
+  </div>
+  <table>
+    <tr>
+      <th>Item</th>
+      <th>Price</th>
+    </tr>
+    <tr>
+      <td>Plant</td>
+      <td id="plant-price">$30</td>
+    </tr>
+    <tr>
+      <td>Soil</td>
+      <td id="soil-price">$0</td>
+    </tr>
+    <tr>
+      <td>Pot</td>
+      <td id="pot-price">$0</td>
+    </tr>
+    <tr>
+      <td>Extras</td>
+      <td id="extras-price">$0</td>
+    </tr>
+    <tr>
+      <td>Total</td>
+      <td id="total-price">$0</td>
+    </tr>
+  </table>
+
+  <script src="products.js"></script>
+  <script>
+    // Controlador para los accordions
+    const accordions = document.getElementsByClassName("accordion");
+    for (let i = 0; i < accordions.length; i++) {
+        accordions[i].addEventListener("click", function() {
+            this.classList.toggle("active");
+            const panel = this.nextElementSibling;
+            if (panel.style.display === "block") {
+                panel.style.display = "none";
+            } else {
+                panel.style.display = "block";
+            }
+        });
+    }
+</script>
+</html>

@@ -1,4 +1,3 @@
-//customi
 import recommendedPlant from "./recommendPlant.js";
 
 class CustomizeForm {
@@ -11,10 +10,12 @@ class CustomizeForm {
     this.previewPot = document.getElementById("previewPot");
     this.previewPotColor = document.getElementById("previewPotColor");
     this.previewExtras = document.getElementById("previewExtras");
+    this.checkAvailabilityButton = document.getElementById("checkAvailabilityButton");
 
     this.loadStoredRecommendation();
     this.addFormSubmitListener();
     this.addFormChangeListener();
+    this.addCheckAvailabilityButtonListener();
   }
 
   showError(message) {
@@ -149,6 +150,13 @@ class CustomizeForm {
   addFormChangeListener() {
     this.customizeForm.addEventListener("change", () => {
       this.hideError();
+    });
+  }
+
+  addCheckAvailabilityButtonListener() {
+    this.checkAvailabilityButton.addEventListener("click", () => {
+      // Redirigir al usuario a la vista del producto
+      window.location.href = "productView.html";
     });
   }
 }
