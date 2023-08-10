@@ -1,13 +1,12 @@
-// Array de plantas recomendadas
+//script.js
 const plants = [
-  
   {
     name: 'Sansevieria',
     soil: 'Easy Drainage Soil',
     pot: 'Ceramic pot',
     color: 'yellow',
     extras: ['Moss pole'],
-    toxic: true
+    toxic: true,
   },
   {
     name: 'Boston Fern',
@@ -15,7 +14,7 @@ const plants = [
     pot: 'Ceramic pot',
     color: 'green',
     extras: ['Moss pole'],
-    toxic: false
+    toxic: false,
   },
   {
     name: 'Aglaonema',
@@ -23,7 +22,7 @@ const plants = [
     pot: 'Simple pot',
     color: 'pink',
     extras: ['Moss pole'],
-    toxic: true
+    toxic: true,
   },
   {
     name: 'Monstera',
@@ -31,7 +30,7 @@ const plants = [
     pot: 'Simple pot',
     color: 'blue',
     extras: ['Moss pole'],
-    toxic: false
+    toxic: false,
   },
   {
     name: 'Aloe Vera',
@@ -39,7 +38,7 @@ const plants = [
     pot: 'Ceramic pot',
     color: 'yellow',
     extras: ['Pebbles'],
-    toxic: true
+    toxic: true,
   },
   {
     name: 'Cactus',
@@ -47,7 +46,7 @@ const plants = [
     pot: 'Simple pot',
     color: 'yellow',
     extras: ['Pebbles'],
-    toxic: false
+    toxic: false,
   },
 
   {
@@ -56,7 +55,7 @@ const plants = [
     pot: 'Ceramic pot',
     color: 'green',
     extras: ['Moss pole'],
-    toxic: true
+    toxic: true,
   },
   {
     name: 'Peace Lily',
@@ -64,7 +63,7 @@ const plants = [
     pot: 'Simple pot decorated',
     color: 'white',
     extras: ['Pebbles', 'Mini Plants'],
-    toxic: true
+    toxic: true,
   },
   {
     name: 'Spider Plant',
@@ -72,7 +71,7 @@ const plants = [
     pot: 'Simple pot',
     color: 'green',
     extras: ['Moss pole'],
-    toxic: false
+    toxic: false,
   },
   {
     name: 'Dracaena',
@@ -80,7 +79,7 @@ const plants = [
     pot: 'Ceramic pot',
     color: 'yellow',
     extras: ['Moss pole', 'Mini Plants'],
-    toxic: true
+    toxic: true,
   },
   {
     name: 'Rubber Plant',
@@ -88,7 +87,7 @@ const plants = [
     pot: 'Simple pot decorated',
     color: 'green',
     extras: ['Moss pole', 'Pebbles'],
-    toxic: false
+    toxic: false,
   },
   {
     name: 'Fiddle Leaf Fig',
@@ -96,7 +95,7 @@ const plants = [
     pot: 'Simple pot',
     color: 'green',
     extras: ['Moss pole', 'Pebbles', 'Mini Plants'],
-    toxic: false
+    toxic: false,
   },
   {
     name: 'Fiddle Leaf Fig',
@@ -104,8 +103,8 @@ const plants = [
     pot: 'Simple pot',
     color: 'green',
     extras: ['Moss pole', 'Pebbles', 'Mini Plants'],
-    toxic: false
-  }
+    toxic: false,
+  },
 ];
 
 function capitalizeFirstLetter(text) {
@@ -113,8 +112,10 @@ function capitalizeFirstLetter(text) {
 }
 
 function areExtrasMatch(plantExtras, selectedExtras) {
-  return plantExtras.every(extra =>
-    Array.from(selectedExtras).some(selectedExtra => selectedExtra.value === extra)
+  return plantExtras.every((extra) =>
+    Array.from(selectedExtras).some(
+      (selectedExtra) => selectedExtra.value === extra,
+    ),
   );
 }
 
@@ -123,7 +124,7 @@ function getImageFileName(plantName) {
 }
 
 function findMatchingPlant(selectedAnswers) {
-  return plants.find(plant => {
+  return plants.find((plant) => {
     return (
       plant.placement === selectedAnswers.placement &&
       plant.sunlight === selectedAnswers.sunlight &&
@@ -154,7 +155,7 @@ function handleSubmit(event) {
   imageContainer.innerHTML = '';
 
   // Agregar/quitar clase para resaltar los campos requeridos
-  requiredFields.forEach(field => {
+  requiredFields.forEach((field) => {
     if (field === null) {
       field?.parentNode?.classList.add('highlight');
     } else {
@@ -165,11 +166,20 @@ function handleSubmit(event) {
   // Mostrar ficha de planta solo si todos los campos requeridos están completos
   const plantCard = document.getElementById('plant-card');
   if (allFieldsCompleted) {
-    const selectedAnswers = { placement, sunlight, pets, watering, style, extras };
+    const selectedAnswers = {
+      placement,
+      sunlight,
+      pets,
+      watering,
+      style,
+      extras,
+    };
     const selectedPlant = findMatchingPlant(selectedAnswers);
 
     if (selectedPlant) {
-      document.getElementById('plant-name').textContent = capitalizeFirstLetter(selectedPlant.name);
+      document.getElementById('plant-name').textContent = capitalizeFirstLetter(
+        selectedPlant.name,
+      );
       document.getElementById('soil').textContent = selectedPlant.soil;
       document.getElementById('pot').textContent = selectedPlant.pot;
       document.getElementById('color').textContent = selectedPlant.color;
@@ -177,7 +187,7 @@ function handleSubmit(event) {
       const extrasList = document.getElementById('extras');
       extrasList.innerHTML = '';
       if (selectedPlant.extras.length > 0) {
-        selectedPlant.extras.forEach(extra => {
+        selectedPlant.extras.forEach((extra) => {
           const li = document.createElement('li');
           li.textContent = extra;
           extrasList.appendChild(li);
@@ -206,7 +216,7 @@ function handleSubmit(event) {
 }
 
 function areAllFieldsCompleted(fields) {
-  return fields.every(field => field !== null);
+  return fields.every((field) => field !== null);
 }
 
 const form = document.getElementById('form');
